@@ -108,7 +108,7 @@ dateChanges(".timer", getDate)
 
 // modal  start
 
-function modalall() {
+
   
   
   const modaltrigger = document.querySelectorAll('[data-modal]'),
@@ -158,9 +158,7 @@ function modalall() {
  }
 
  window.addEventListener("scroll", clientHeight)
-}
 
-modalall()
 
 
 // modal end
@@ -256,22 +254,29 @@ forms.forEach((form) => {
   formpost(form)
 })
 
+const msg = {
+  loading: "img/spinner.svg",
+  succes: "thanks for you",
+  failore: "something went wrong"
+ }
 
 function formpost(form) {
   form.addEventListener("submit", (e) =>{
     e.preventDefault()
 
-    const msg = {
-     loading: "Loading",
-     succes: "Succesfull",
-     failore: "something went wrong"
-    }
+    
 
-    const statusmessage = document.createElement("div")
-    form.append(statusmessage)
+    const statusmessage = document.createElement("img")
+    statusmessage.src = msg.loading
+
+    statusmessage.style.cssText = `
+    display: block;
+    margin: 0 auto;
+    `
+    form.insertAdjacentElement("afterend", statusmessage)
 
     const request = new XMLHttpRequest()
-    request.open("POST", 'server.pp')
+    request.open("POST", 'server.php')
 
 
 
@@ -291,17 +296,47 @@ function formpost(form) {
     request.addEventListener("load", () =>{
       if (request.status === 200) {
         console.log(request.response);
-        statusmessage.textContent = msg.loading
+        showthanksModal(msg.succes)
         setTimeout(() => {
           statusmessage.remove()
         }, 2000);
       }else{
         console.log("error");
-        statusmessage.textContent = msg.failore
+        showthanksModal(msg.failore)
       }
       form.reset()
     })
   })
+
+  function showthanksModal(data) {
+    const modialog = document.querySelector(".modal__dialog")
+
+    modialog.classList.add("tabcontent")
+    modialog.classList.remove("tabshow")
+    startmodal()
+
+    const thanksModal = document.createElement("div")
+    thanksModal.classList.add("modal__dialog")    
+     
+    thanksModal.innerHTML = `
+     <div class="modal__content">
+      <div data-close class="modal__close">&times;</div>
+      <div class="modal__title">
+        ${data}
+      </div>
+     </div>
+    `
+    document.querySelector(".modal").append(thanksModal)
+
+    setTimeout(() => {
+     thanksModal.remove()
+     modialog.classList.add("tabshow")
+     modialog.classList.remove("tabcontent")
+     closemodall()
+    }, 3000)
+  }
+
+
 }
 
 // forms end
