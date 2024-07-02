@@ -246,3 +246,62 @@ new Menu(
 
 // menu class companent end
 
+
+
+// forms start
+
+const forms = document.querySelectorAll("form")
+
+forms.forEach((form) => {
+  formpost(form)
+})
+
+
+function formpost(form) {
+  form.addEventListener("submit", (e) =>{
+    e.preventDefault()
+
+    const msg = {
+     loading: "Loading",
+     succes: "Succesfull",
+     failore: "something went wrong"
+    }
+
+    const statusmessage = document.createElement("div")
+    form.append(statusmessage)
+
+    const request = new XMLHttpRequest()
+    request.open("POST", 'server.pp')
+
+
+
+    const obj = {}
+
+    const formdata = new FormData(form)
+    console.log(formdata);
+
+
+    formdata.forEach((key, val)  => {
+      obj[key] = val
+    })
+
+    const json = JSON.stringify(obj)
+    request.send(json)
+
+    request.addEventListener("load", () =>{
+      if (request.status === 200) {
+        console.log(request.response);
+        statusmessage.textContent = msg.loading
+        setTimeout(() => {
+          statusmessage.remove()
+        }, 2000);
+      }else{
+        console.log("error");
+        statusmessage.textContent = msg.failore
+      }
+      form.reset()
+    })
+  })
+}
+
+// forms end
