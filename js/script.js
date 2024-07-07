@@ -119,7 +119,6 @@ dateChanges(".timer", getDate)
       item.addEventListener("click", () =>{
        if (!item.classList.contains("tabcontent")) {
         startmodal()
-       console.log(modal);
        }else{
         closemodall()
        }
@@ -256,7 +255,7 @@ forms.forEach((form) => {
 
 const msg = {
   loading: "img/spinner.svg",
-  succes: "thanks for you",
+  succes: "thanks you for submiting",
   failore: "something went wrong"
  }
 
@@ -275,37 +274,34 @@ function formpost(form) {
     `
     form.insertAdjacentElement("afterend", statusmessage)
 
-    const request = new XMLHttpRequest()
-    request.open("POST", 'server.php')
-
-
-
-    const obj = {}
-
     const formdata = new FormData(form)
-    console.log(formdata);
-
-
+    
+    let obj = {}
     formdata.forEach((key, val)  => {
       obj[key] = val
     })
+    
 
-    const json = JSON.stringify(obj)
-    request.send(json)
-
-    request.addEventListener("load", () =>{
-      if (request.status === 200) {
-        console.log(request.response);
-        showthanksModal(msg.succes)
-        setTimeout(() => {
-          statusmessage.remove()
-        }, 2000);
-      }else{
-        console.log("error");
+    fetch('server.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj),
+    })
+    .then(data => data.text())
+    .then(data => {
+      console.log(data);
+      showthanksModal(msg.succes)
+      statusmessage.remove()
+    })
+    .catch(() => {
+      console.log("error");
         showthanksModal(msg.failore)
-      }
+    }).finally(() => {
       form.reset()
     })
+  
   })
 
   function showthanksModal(data) {
@@ -339,4 +335,3 @@ function formpost(form) {
 
 }
 
-// forms end
