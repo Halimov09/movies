@@ -250,8 +250,19 @@ new Menu(
 const forms = document.querySelectorAll("form")
 
 forms.forEach((form) => {
-  formpost(form)
+  bindPostdata(form)
 })
+
+ async function postData(url, data) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: data,
+  })
+  return await res.json()
+}
 
 const msg = {
   loading: "img/spinner.svg",
@@ -259,7 +270,7 @@ const msg = {
   failore: "something went wrong"
  }
 
-function formpost(form) {
+function bindPostdata(form) {
   form.addEventListener("submit", (e) =>{
     e.preventDefault()
 
@@ -275,21 +286,12 @@ function formpost(form) {
     form.insertAdjacentElement("afterend", statusmessage)
 
     const formdata = new FormData(form)
+   
     
-    let obj = {}
-    formdata.forEach((key, val)  => {
-      obj[key] = val
-    })
+    let obj = JSON.stringify(Object.fromEntries(formdata.entries()))
     
 
-    fetch('http://localhost:3000/request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(obj),
-    })
-    .then(data => data.text())
+    postData("http://localhost:3000/request", obj)
     .then(data => {
       console.log(data);
       showthanksModal(msg.succes)
