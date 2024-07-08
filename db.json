@@ -1,0 +1,35 @@
+{
+  "menu": [
+    {
+      "src": "img/tabs/1.png",
+      "alt": "vegy",
+      "title": "Usual",
+      "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.",
+      "price": 10,
+      "id": "6406"
+    },
+    {
+      "src": "img/tabs/2.png",
+      "alt": "elite",
+      "title": "PREMIUM",
+      "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.",
+      "price": 20,
+      "id": "bf94"
+    },
+    {
+      "src": "img/tabs/1.png",
+      "alt": "post",
+      "title": "VIP",
+      "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.",
+      "price": 30,
+      "id": "9a24"
+    }
+  ],
+  "request": [
+    {
+      "75499": "phone",
+      "id": "08c2",
+      "wef": "name"
+    }
+  ]
+}

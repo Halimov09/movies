@@ -1,0 +1,19 @@
+{
+  "name": "3-modul.-starter-source-code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js",
+    "html",
+    "css"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "movies",
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.1"
+  }
+}

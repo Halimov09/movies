@@ -282,7 +282,7 @@ function formpost(form) {
     })
     
 
-    fetch('server.php', {
+    fetch('http://localhost:3000/request', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -334,4 +334,6 @@ function formpost(form) {
 
 
 }
+
+
 
