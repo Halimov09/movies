@@ -9,7 +9,7 @@
       "id": "6406"
     },
     {
-      "src": "img/tabs/2.png",
+      "src": "img/tabs/2.jpg",
       "alt": "elite",
       "title": "PREMIUM",
       "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.",
@@ -17,7 +17,7 @@
       "id": "bf94"
     },
     {
-      "src": "img/tabs/1.png",
+      "src": "img/tabs/3.jpg",
       "alt": "post",
       "title": "VIP",
       "desc": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.",
@@ -75,6 +75,11 @@
       "id": "3aae",
       "name": "wef",
       "phone": "75499"
+    },
+    {
+      "id": "a683",
+      "name": "tillo",
+      "phone": "+998993271333"
     }
   ]
 }

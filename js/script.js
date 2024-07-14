@@ -1,3 +1,5 @@
+
+
 const firstTab = document.querySelectorAll(".tabheader__item"),
   secondTab = document.querySelectorAll(".tabcontent"),
   loader = document.querySelector(".loader")
@@ -213,37 +215,14 @@ class Menu {
 
 }
 
-new Menu(
-  "img/tabs/1.png",
-   "vegy", 
-   "Usual",
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.", 
-    10,
-    '.menu .container',
-).render()
-
-new Menu(
-  "img/tabs/2.jpg",
-   "elite", 
-   "Premium",
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.", 
-    15,
-    '.menu .container',
-).render()
-
-new Menu(
-  "img/tabs/3.jpg",
-   "post", 
-   "VIP",
-    "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit nesciunt facere, sequi exercitationem praesentium ab cupiditate beatae debitis perspiciatis itaque quaerat id modi corporis delectus ratione nobis harum voluptatum in.", 
-    20,
-    '.menu .container',
-    "menu__item"
-).render()
-
-// menu class companent end
+axios.get("http://localhost:3000/menu").then((data) => {
+  data.data.forEach(({src, alt, title, desc, price}) => {
+    new Menu(src, alt, title, desc, price, '.menu .container').render()
+  })
+})
 
 
+// menu end
 
 // forms start
 
@@ -339,3 +318,51 @@ function bindPostdata(form) {
 
 
 
+// slider start
+
+const slides = document.querySelectorAll(".offer__slide"),
+  prev = document.querySelector(".offer__slider-prev"),
+  next = document.querySelector(".offer__slider-next"),
+  current = document.querySelector("#current"),
+  total = document.querySelector("#total")
+
+let slideIndex = 1
+
+
+if (slides.length < 10) {
+  total.textContent = `0${slides.length}`
+}else{
+  total.textContent = slides.length
+}
+
+showSlide()
+
+function showSlide (idx) {
+  if (idx > slides.length) {
+    slideIndex = 1
+  }else if (idx < 1) {
+    slideIndex = slides.length
+  }
+  slides.forEach(item => item.style.display = "none")
+  slides[slideIndex - 1].style.display = "block"
+
+  if (slideIndex < 10) {
+    current.textContent = `0${slideIndex}`
+  }else{
+    current.textContent = slideIndex
+  }
+}
+
+function  changeSlide (idx) {
+  showSlide(slideIndex += idx)
+}
+
+next.addEventListener("click", () => {
+  changeSlide(1)
+})
+
+prev.addEventListener("click", () => {
+  changeSlide(-1)
+})
+
+// slider end
