@@ -324,45 +324,112 @@ const slides = document.querySelectorAll(".offer__slide"),
   prev = document.querySelector(".offer__slider-prev"),
   next = document.querySelector(".offer__slider-next"),
   current = document.querySelector("#current"),
-  total = document.querySelector("#total")
+  total = document.querySelector("#total"),
+  slidesWrapper = document.querySelector(".offer__slider-wrapper"),
+  slidefield = document.querySelector(".offer__slider__inner"),
+  width = window.getComputedStyle(slidesWrapper).width,
+  bigSlide = document.querySelector(".offer__slider")
 
-let slideIndex = 1
 
+  let slideIndex = 1
+  let offset = 0
 
-if (slides.length < 10) {
-  total.textContent = `0${slides.length}`
-}else{
-  total.textContent = slides.length
-}
-
-showSlide()
-
-function showSlide (idx) {
-  if (idx > slides.length) {
-    slideIndex = 1
-  }else if (idx < 1) {
-    slideIndex = slides.length
-  }
-  slides.forEach(item => item.style.display = "none")
-  slides[slideIndex - 1].style.display = "block"
-
-  if (slideIndex < 10) {
+ function remem() {
+  if (slides.length < 10) {
+    total.textContent = `0${slides.length}`
     current.textContent = `0${slideIndex}`
   }else{
+    total.textContent = slides.length
     current.textContent = slideIndex
   }
-}
+ }
 
-function  changeSlide (idx) {
-  showSlide(slideIndex += idx)
-}
+ const dotsidicators = document.createElement("ol")
+ dotsidicators.classList.add("idicators")
+ bigSlide.append(dotsidicators)
+
+ let dotArr = []
+ 
+ for (let i = 0; i < slides.length; i++){
+  const dot = document.createElement("li")
+  dot.setAttribute("data-dot", i + 1)
+  dot.classList.add("dotclass")
+  dotsidicators.append(dot)
+  dotArr.push(dot)
+  if (i === 0) {dot.style.opacity = 1}
+ }
+
+
+
+ remem()
+
+slidefield.style.width = 100 * slides.length + "%"
+slidefield.style.display = "flex"
+slidesWrapper.style.overflow = "hidden"
+slidefield.style.transition = ".5s"
+
+slides.forEach(slide =>{
+  slide.style.width = width
+})
 
 next.addEventListener("click", () => {
-  changeSlide(1)
+  if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {
+    offset = 0
+  }else{
+    offset += +width.slice(0, width.length - 2)
+  }
+  slidefield.style.transform = `translateX(-${offset}px)`
+
+  if (slideIndex == slides.length) {
+    slideIndex = 1
+  }else{
+    slideIndex ++
+  }
+  remem()
+
+  dotArr.forEach((dot) => {
+    dot.style.opacity = ".5"
+  })
+  dotArr[slideIndex - 1].style.opacity = "1"
+
 })
+
 
 prev.addEventListener("click", () => {
-  changeSlide(-1)
+  
+  if (offset == 0 ) {
+    offset = slidefield.clientWidth / slides.length * (slides.length - 1)
+  }else{
+    offset -= slidefield.clientWidth / slides.length
+    offset = offset.toFixed(2)
+  }  
+  slidefield.style.transform = `translateX(-${offset}px)`
+
+  if (slideIndex == 1) {
+    slideIndex = slides.length
+  }else{
+    slideIndex --
+  }
+  remem()
+  dotArr.forEach((dot) => {
+    dot.style.opacity = ".5"
+  })
+  dotArr[slideIndex - 1].style.opacity = "1"
 })
 
+dotArr.forEach(dot => {
+  dot.addEventListener("click", (e) =>{
+    const key = e.target.getAttribute("data-dot")
+    slideIndex = +key
+    offset = +width.slice(0, width.length - 2) * (key - 1)
+    slidefield.style.transform = `translateX(-${offset}px)`
+    dotArr.forEach((dot) => {
+      dot.style.opacity = ".5"
+    })
+    dotArr[slideIndex - 1].style.opacity = "1"
+    remem()
+  })
+}) 
+
 // slider end
+

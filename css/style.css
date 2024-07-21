@@ -802,4 +802,20 @@ section {
   display: block;
 }
 
+.idicators{
+  position: relative;
+  margin: 0 auto;
+  list-style: none;
+  bottom: 20px;
+  display: flex;
 
+}
+
+.dotclass{
+  width: 30px;
+  height: 6px;
+  background-color: #fffefe;
+  margin: 0 3px;
+  opacity: .5;
+  cursor: pointer;
+}
